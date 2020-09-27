@@ -8,13 +8,13 @@ from django.contrib.auth.models import User
 from .models import Task
 from rest_framework import viewsets
 from .serializers import TaskSerializer, UserSerializer
-
+from .ownpermissions import ProfilePermission
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # 誰でもアクセス可能
-    permission_classes = (AllowAny,)
+    # ProfilePermissionによりput,DELETEを禁止する
+    permission_classes = (ProfilePermission,)
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
